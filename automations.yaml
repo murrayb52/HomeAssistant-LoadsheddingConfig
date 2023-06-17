@@ -1,0 +1,30 @@
+- alias: "Turn on LED before loadshedding"
+  trigger:
+    - platform: state
+      entity_id: sensor.esp_loadshedding
+  action:
+    - choose:
+        - conditions:
+          - condition: template
+            value_template: "{{ (state_attr('sensor.esp_loadshedding', 'events')[0].start.timestamp() - now().timestamp() < 300) and (state_attr('sensor.esp_loadshedding', 'events')[0].end.timestamp() - now().timestamp() > 300) }}"
+          sequence:
+            - service: switch.turn_on
+              entity_id: switch.esp32_device_esp32_switch
+        - default:
+            - service: switch.turn_off
+              entity_id: switch.esp32_device_esp32_switch
+
+
+# Automate Telegram HomeAssistantBot to send messagewhen LED state changes
+- alias: Send Telegram message on led_switch state change
+  trigger:
+    platform: state
+    entity_id: switch.esp32_device_esp32_switch
+  condition:
+    condition: template
+    value_template: "{{ trigger.from_state.state != trigger.to_state.state }}"
+  action:
+    service: notify.homeassistantbot
+    data_template:
+      message: "[{{ now().strftime('%d/%m - %H:%M:%S') }}] The LED has been turned {{ 'on' if trigger.to_state.state == 'on' else 'off' }}."
+

@@ -1,0 +1,9 @@
+- platform: rest
+  name: esp_loadshedding
+  resource: https://developer.sepush.co.za/business/2.0/area?id=5
+  headers:
+    token: 1B524B3A-C0124533-8C8DA3F2-6EDFC86C
+  json_attributes:
+    - events
+  scan_interval: 3600
+  value_template: '{{ value_json.info.name }}'

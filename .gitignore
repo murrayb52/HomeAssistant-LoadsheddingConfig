@@ -1,0 +1,18 @@
+# Whitelist yaml, gitignore and README files
+!*.yaml
+!.gitignore
+!*.md
+
+# Ignore these folders
+esphome/.esphome
+.custom_components
+blueprints
+.storage
+
+# Explicitly exclude these files
+ip_bans.yaml
+*secrets.yaml
+*.log*
+*.db*
+known_devices.yaml
+.HA_VERSION

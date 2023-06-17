@@ -1,0 +1,12 @@
+lovelace:
+  mode: yaml
+
+title: Murray's Load Shedding
+  type: entities
+  entities:
+  - sensor.load_shedding_stage_capetown
+  - sensor.load_shedding_stage_eskom
+  - entity: calendar.load_shedding_forecast
+    name: Murray's Forecast
+  - sensor.load_shedding_area_capetown_5_rondebosch
+  - sensor.load_shedding_sepush_api_quota
